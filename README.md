@@ -20,21 +20,60 @@ NLP has become increasingly important in recent years as the amount of natural l
 You can open the notebook (the .ipynb file) directly on your Google Colab account.
 Also, if you are a Jupyter and Python user, you can download the notebook and run it directly on your computer.
 
-----------------------------------------------------------------------------------------------------------
+# spaCy Matcher Patterns
 
-# Aprendiendo PNL
-Este proyecto es adecuado para principiantes que quieran dar sus primeros pasos en el PNL.
+The `Matcher` in spaCy allows for robust and efficient matching of words, phrases, and patterns in text. This document covers commonly used token attributes to define patterns.
 
-### ¿Qué es el PNL?
-Es una rama de la IA que se refiere a las interacciones entre las computadoras y el lenguaje humano. Se refiere a la capacidad de las computadoras de programa para comprender el lenguaje humano hablado y escrito. El PNL se ha vuelto cada vez más importante en los últimos años a medida que la cantidad de datos de lenguaje disponibles ha crecido exponencialmente. Debido al creciente reconocimiento del PNL, aprender sobre este tema se ha vuelto esencial.
+## 1. Text and Lexical Attributes
 
-### ¿Qué se incluye en el cuaderno?
-Ejemplos básicso que muestran cómo utilizar PNL en diferentes idiomas.
-Cómo seleccionar fragmentos de texto.
-Ejemplo que muestra cómo extraer porcentajes en un texto.
-Ejemplos de extracción de marcas.
-Ejemplos de predicción y extracción de nombres de entidades (Amazon, Sony).
-Ejemplo de cómo encontrar palabras y frases en un texto usando la función Matcher
+- **TEXT**: Exact token text.
+  * Example: `{'TEXT': 'iPhone'}` matches tokens with the exact text "iPhone".
+- **LOWER**: Lowercase form of the token text.
+  * Example: `{'LOWER': 'iphone'}` matches "iPhone", "iphone", "IPHONE", etc.
+- **LENGTH**: Length of the token text.
+  * Example: `{'LENGTH': 5}` matches tokens with 5 characters.
+- **IS_ALPHA**, **IS_ASCII**, **IS_DIGIT**:
+  * Check if the token is alphabetic, ASCII, or a digit.
+- **IS_LOWER**, **IS_UPPER**, **IS_TITLE**: 
+  * Check the token's casing. 
+- **IS_PUNCT**, **IS_SPACE**, **IS_STOP**: 
+  * Check if the token is punctuation, whitespace, or a stop word.
 
-### ¿Cómo usarlo?
-Puede abrir el cuaderno (el archivo .ipynb) directamente en su cuenta de Google Colab. Además, si es usuario de Jupyter y Python, puede descargar el cuaderno y ejecutarlo directamente en su computadora.
+## 2. Grammatical Attributes
+
+- **POS**: Coarse-grained part-of-speech tag.
+  * Example: `{'POS': 'NOUN'}` matches any noun.
+- **TAG**: Fine-grained part-of-speech tag specific to the language model.
+- **DEP**: Dependency label.
+- **LEMMA**: Base form of the word.
+  * Example: `{'LEMMA': 'run'}` matches "run", "runs", "running", etc.
+
+## 3. Boolean Value Attributes
+
+Check attributes that return boolean values:
+- **IS_DIGIT**, **IS_ALPHA**, **IS_ASCII**, etc.
+
+## 4. Operators
+
+- **OP**: Set regex-like operators:
+  * `'!'`: Match exactly one time (default).
+  * `'?'`: Match 0 or 1 times.
+  * `'+'`: Match 1 or more times.
+  * `'*'`: Match 0 or more times.
+
+## 5. Shape
+
+- **SHAPE**: Word shape of the token.
+  * Example: `{'SHAPE': 'Xxxx.'}` matches capitalized words followed by a period.
+
+## 6. Lookahead and Lookbehind
+
+Use the `?` notation for positive and negative lookahead assertions.
+
+---
+
+## Pattern Examples
+
+- Match the word "iPhone" in any case:
+  ```python
+  [{'LOWER': 'iphone'}]
